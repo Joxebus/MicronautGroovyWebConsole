@@ -9,6 +9,5 @@ out/
 *.ipr
 *.iws
 .project
-.settings
 .classpath
 .factorypath
