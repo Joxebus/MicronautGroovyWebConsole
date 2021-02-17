@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:include="fragments/header :: header">
+    <title>Hello Micronaut!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+</head>
+<body>
+
+<div class="container">
+
+    <!--div th:replace="fragments/header :: header-nav">&nbsp;</div-->
+
+    <h1>Online Groovy Console</h1>
+    <p>This console supports Groovy 3.0.6</p>
+    <form method="post" action="/">
+        <button type="submit" value="Execute" class="btn btn-primary">Execute</button>
+        <button type="button" value="Clear" class="btn btn-secondary" id="clear">Clear</button>
+        <textarea id="code" name="code" th:text="${groovyScript}"></textarea>
+    </form>
+
+    <div class="output" th:if="${output}">
+        <h3>Output</h3>
+        <textarea id="output" name="output" th:text="${output}"></textarea>
+    </div>
+
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            lineNumbers: true,
+            matchBrackets: true,
+            mode: "text/x-groovy"
+        });
+
+        var output = CodeMirror.fromTextArea(document.getElementById("output"), {
+            lineNumbers: false,
+            matchBrackets: true,
+            readOnly: true,
+            mode: "text/x-groovy"
+        });
+
+        document.getElementById("clear").onclick = function() {
+            console.log("Clearing code and output")
+            editor.setValue("");
+            editor.clearHistory();
+            output.setValue("");
+            output.clearHistory();
+        }
+
+    </script>
+
+</div>
+<!-- /.container -->
+
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

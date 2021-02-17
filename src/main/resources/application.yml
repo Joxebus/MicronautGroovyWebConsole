@@ -1,0 +1,17 @@
+---
+micronaut:
+  application:
+    name: MicronautGroovyWebConsole
+  server:
+    port: 8089
+  views:
+    thymeleaf:
+      enabled: true
+      character-encoding: "UTF-8"
+  router:
+    static-resources:
+      default:
+        enabled: true
+        mapping: "/public/**"
+        paths: "classpath:public"
+

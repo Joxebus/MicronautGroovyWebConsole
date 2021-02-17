@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.github.joxebus
+testFramework: spock
+sourceLanguage: groovy
+buildTool: gradle
+features: [app-name, gradle, groovy, groovy-application, http-client, logback, netty-server, readme, shade, spock, yaml]

@@ -1,0 +1,6 @@
+---
+micronaut:
+  server:
+    port: 18080
+  security:
+    enabled: false
