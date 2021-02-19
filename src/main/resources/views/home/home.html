@@ -11,42 +11,35 @@
 
     <!--div th:replace="fragments/header :: header-nav">&nbsp;</div-->
 
-    <h1>Online Groovy Console</h1>
-    <p>This console supports Groovy 3.0.6</p>
-    <form method="post" action="/">
-        <button type="submit" value="Execute" class="btn btn-primary">Execute</button>
-        <button type="button" value="Clear" class="btn btn-secondary" id="clear">Clear</button>
-        <textarea id="code" name="code" th:text="${groovyScript}"></textarea>
-    </form>
+    <section id="code-section">
+        <h1>Online Groovy Console</h1>
+        <p>This console supports Groovy 3.0.6</p>
+        <form>
+            <div class="btn-group" role="group" aria-label="Actions">
+                <button type="button" value="Execute" class="btn btn-primary" id="execute">Execute</button>
+                <button type="button" value="Clear" class="btn btn-secondary" id="clear">Clear</button>
+            </div>
 
-    <div class="output" th:if="${output}">
-        <h3>Output</h3>
-        <textarea id="output" name="output" th:text="${output}"></textarea>
-    </div>
+            <textarea id="code" name="code" th:text="${groovyScript}"></textarea>
+        </form>
+    </section>
 
-    <script>
-        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-            lineNumbers: true,
-            matchBrackets: true,
-            mode: "text/x-groovy"
-        });
+    <section id="output-section">
+        <h4>Output</h4>
+        <h5 id="executionTime"></h5>
+        <div class="card bg-info text-white" id="output-card">
+            <div class="card-body">
+                <pre><code id="output"></code></pre>
+            </div>
+        </div>
+        <div class="card bg-danger text-white" id="error-card" hidden="hidden">
+            <div class="card-body">
+                <pre><code id="error"></code></pre>
+            </div>
+        </div>
+    </section>
 
-        var output = CodeMirror.fromTextArea(document.getElementById("output"), {
-            lineNumbers: false,
-            matchBrackets: true,
-            readOnly: true,
-            mode: "text/x-groovy"
-        });
-
-        document.getElementById("clear").onclick = function() {
-            console.log("Clearing code and output")
-            editor.setValue("");
-            editor.clearHistory();
-            output.setValue("");
-            output.clearHistory();
-        }
-
-    </script>
+    <script th:src="@{public/js/home.js}"></script>
 
 </div>
 <!-- /.container -->
