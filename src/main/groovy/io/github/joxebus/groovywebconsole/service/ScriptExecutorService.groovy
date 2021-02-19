@@ -10,7 +10,8 @@ import javax.inject.Singleton
 @Slf4j
 class ScriptExecutorService {
 
-    ByteArrayOutputStream execute(String scriptText) {
+    Map execute(String scriptText) {
+        Map result = [:]
         String encoding = 'UTF-8'
         ByteArrayOutputStream stream = new ByteArrayOutputStream()
         PrintStream printStream = new PrintStream(stream, true, encoding)
@@ -20,17 +21,16 @@ class ScriptExecutorService {
         long startTime = System.currentTimeMillis()
         try {
             log.info("Start execution of the script")
-            Script script = shell.parse(scriptText)
-            script.run()
-        } catch(Exception e) {
+            shell.evaluate(scriptText)
+            result.put("output", stream.toString())
+        } catch(Exception | Error e) {
             log.error("There was an error when executing script", e)
-            printStream.println(e.getMessage())
+            result.put("error", e.getMessage())
         } finally {
             long finishTime = System.currentTimeMillis() - startTime
-            printStream.println("\nExecution time: $finishTime ms")
             log.info("Finish script execution")
+            result.put("executionTime", "Execution time: $finishTime ms".toString())
         }
-
-        stream
+        result
     }
 }
