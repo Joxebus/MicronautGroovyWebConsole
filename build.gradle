@@ -36,9 +36,6 @@ dependencies {
 
     // Thymeleaf support
     compile "io.micronaut.views:micronaut-views-thymeleaf"
-
-    // Bootstrap
-    compile group: 'org.webjars', name: 'bootstrap', version: '4.1.3'
 }
 
 
