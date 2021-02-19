@@ -2,6 +2,7 @@ package io.github.joxebus.groovywebconsole.service
 
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import io.github.joxebus.groovywebconsole.security.ScriptSecurityManager
 
 import javax.inject.Singleton
 
@@ -10,8 +11,15 @@ import javax.inject.Singleton
 @Slf4j
 class ScriptExecutorService {
 
+    final ScriptSecurityManager scriptSecurityManager
+
+    ScriptExecutorService(ScriptSecurityManager scriptSecurityManager) {
+        this.scriptSecurityManager = scriptSecurityManager
+    }
+
     Map execute(String scriptText) {
         Map result = [:]
+        System.setSecurityManager(scriptSecurityManager)
         String encoding = 'UTF-8'
         ByteArrayOutputStream stream = new ByteArrayOutputStream()
         PrintStream printStream = new PrintStream(stream, true, encoding)
