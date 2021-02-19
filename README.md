@@ -8,6 +8,8 @@ compatible with Groovy 3.0.6, this project is builtin with Micronaut.
 - Groovy 3.0.6
 - Micronaut 2.3.2  
 - Gradle 6.X
+- Thymeleaf 2.2.1
+- Bootstrap 5
 
 ## Preview
 
