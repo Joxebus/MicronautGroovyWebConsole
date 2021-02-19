@@ -16,8 +16,9 @@
         <p>This console supports Groovy 3.0.6</p>
         <form>
             <div class="btn-group" role="group" aria-label="Actions">
-                <button type="button" value="Execute" class="btn btn-primary" id="execute">Execute</button>
-                <button type="button" value="Clear" class="btn btn-secondary" id="clear">Clear</button>
+                <button type="button" value="Execute" class="btn btn-primary" id="execute">Execute(ctrl+R)</button>
+                <button type="button" value="Clear" class="btn btn-info text-white" id="clear-output">Clear Output(ctrl+W)</button>
+                <button type="button" value="Clear" class="btn btn-secondary" id="clear-all">Clear All(ctrl+K)</button>
             </div>
 
             <textarea id="code" name="code" th:text="${groovyScript}"></textarea>
