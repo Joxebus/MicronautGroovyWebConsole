@@ -2,6 +2,7 @@ package io.github.joxebus.groovywebconsole.service
 
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import io.github.joxebus.groovywebconsole.security.ScriptSecurityClassLoader
 import io.github.joxebus.groovywebconsole.security.ScriptSecurityManager
 
 import javax.inject.Singleton
@@ -25,7 +26,7 @@ class ScriptExecutorService {
         PrintStream printStream = new PrintStream(stream, true, encoding)
 
         Binding binding = new Binding([out: printStream])
-        GroovyShell shell = new GroovyShell(binding)
+        GroovyShell shell = createShell(binding)
         long startTime = System.currentTimeMillis()
         try {
             log.info("Start execution of the script")
@@ -33,12 +34,19 @@ class ScriptExecutorService {
             result.put("output", stream.toString())
         } catch(Exception | Error e) {
             log.error("There was an error when executing script", e)
-            result.put("error", e.getMessage())
+            e.printStackTrace(printStream)
+            result.put("error", stream.toString())
         } finally {
             long finishTime = System.currentTimeMillis() - startTime
-            log.info("Finish script execution")
+            log.info("Finish script execution in $finishTime ms")
             result.put("executionTime", "Execution time: $finishTime ms".toString())
         }
         result
+    }
+
+    private GroovyShell createShell(Binding binding) {
+        ClassLoader parentClassLoader = ScriptExecutorService.class.getClassLoader();
+        ScriptSecurityClassLoader scriptClassLoader = new ScriptSecurityClassLoader(parentClassLoader);
+        new GroovyShell(scriptClassLoader, binding)
     }
 }
