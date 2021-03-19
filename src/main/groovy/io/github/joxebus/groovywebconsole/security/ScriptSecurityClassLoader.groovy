@@ -2,12 +2,15 @@ package io.github.joxebus.groovywebconsole.security
 
 import io.github.joxebus.groovywebconsole.exception.ScriptSecurityException
 
+import java.util.concurrent.Executors
+
 
 class ScriptSecurityClassLoader extends GroovyClassLoader {
 
     private static String[] CLASSES_NOT_ALLOWED = [
-            "java.lang.Thread",
-            "java.lang.Runnable"
+            Thread.class.name,
+            Runnable.class.name,
+            Executors.class.name
     ]
 
     ScriptSecurityClassLoader(ClassLoader parent) {
@@ -26,7 +29,7 @@ class ScriptSecurityClassLoader extends GroovyClassLoader {
         return super.loadClass(name, resolve)
     }
 
-    private isClassAllowed(String name) {
+    private static isClassAllowed(String name) {
         CLASSES_NOT_ALLOWED.each {className ->
             if(name.startsWith(className)) {
                 throw new ScriptSecurityException("The class [$name] is not allowed on this context.")
