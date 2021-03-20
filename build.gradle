@@ -48,6 +48,13 @@ java {
     targetCompatibility = JavaVersion.toVersion("1.8")
 }
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
 // heroku configuration
 task stage {
     dependsOn 'build', 'clean'
