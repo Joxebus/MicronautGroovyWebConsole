@@ -3,6 +3,18 @@ window.onload = function() {
 };
 
 function init() {
+
+    if (typeof(Storage) !== "undefined") {
+        console.log("Automatic save every 5 minutes on local storage enabled");
+        const interval = setInterval(function() {
+            saveCodeInLocalStorage()
+        }, 300000);
+
+        restoreCodeFromLocalStorage();
+    } else {
+        console.log("Your browser does not support local storage")
+    }
+
     const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
         matchBrackets: true,
@@ -16,6 +28,7 @@ function init() {
 
     function executeCode() {
         console.log("Executing script");
+        saveCodeInLocalStorage();
         resetOutputSection();
         const requestData = { code: editor.getValue()  }
         const request = new XMLHttpRequest();
@@ -41,6 +54,7 @@ function init() {
 
     function downloadCode() {
         console.log("Downloading script");
+        saveCodeInLocalStorage();
         const requestData = { code: editor.getValue()  }
         const request = new XMLHttpRequest();
         request.open("POST", "/script/download", true);
@@ -72,10 +86,11 @@ function init() {
     }
 
     function clearAll() {
-        console.log("Clearing code and output")
+        console.log("Clearing code and output");
         editor.setValue("");
         editor.clearHistory();
         resetOutputSection();
+        clearLocalStorage();
     }
 
     function resetOutputSection() {
@@ -84,6 +99,30 @@ function init() {
         document.getElementById("error").innerText = "";
         document.getElementById("output-card").hidden = false;
         document.getElementById("error-card").hidden = true;
+    }
+
+    function saveCodeInLocalStorage() {
+        if (typeof(Storage) !== "undefined") {
+            console.log("Saving code in local storage");
+            localStorage.setItem("groovyCode", JSON.stringify(editor.getValue().toString().split("\n")));
+        }
+    }
+
+    function restoreCodeFromLocalStorage() {
+        if (typeof(Storage) !== "undefined") {
+            const code = localStorage.getItem("groovyCode");
+            if(code) {
+                console.log("Restoring code from local storage");
+                document.getElementById("code").innerHTML = JSON.parse(code).join("\n");
+            }
+
+        }
+    }
+
+    function clearLocalStorage() {
+        if (typeof(Storage) !== "undefined") {
+            localStorage.removeItem("groovyCode")
+        }
     }
 
     function keyPressShortcuts(e) {
