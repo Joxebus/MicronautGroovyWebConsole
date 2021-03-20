@@ -2,6 +2,7 @@ package io.github.joxebus.groovywebconsole.security
 
 import io.github.joxebus.groovywebconsole.exception.ScriptSecurityException
 
+import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
 
 
@@ -10,7 +11,8 @@ class ScriptSecurityClassLoader extends GroovyClassLoader {
     private static String[] CLASSES_NOT_ALLOWED = [
             Thread.class.name,
             Runnable.class.name,
-            Executors.class.name
+            Executors.class.name,
+            CompletableFuture.packageName
     ]
 
     ScriptSecurityClassLoader(ClassLoader parent) {
