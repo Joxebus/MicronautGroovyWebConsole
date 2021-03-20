@@ -15,13 +15,17 @@
         <h1>Online Groovy Console</h1>
         <p>This console supports Groovy 3.0.6</p>
         <form>
-            <div class="btn-group" role="group" aria-label="Actions">
-                <button type="button" value="Execute" class="btn btn-primary" id="execute">Execute(ctrl+R)</button>
-                <button type="button" value="Clear" class="btn btn-info text-white" id="clear-output">Clear Output(ctrl+W)</button>
-                <button type="button" value="Clear" class="btn btn-secondary" id="clear-all">Clear All(ctrl+K)</button>
+            <div class="actions">
+                <span class="badge bg-primary" id="execute">Execute</span>
+                <span class="badge bg-info text-white" id="clear-output">Clear Output</span>
+                <span class="badge bg-secondary" id="clear-all">Clear All</span>
             </div>
 
             <textarea id="code" name="code" th:text="${groovyScript}"></textarea>
+
+            <div class="actions">
+                <span class="badge bg-success" id="download">Download</span>
+            </div>
         </form>
     </section>
 

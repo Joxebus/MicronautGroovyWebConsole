@@ -36,6 +36,7 @@ class ScriptExecutorService {
             log.error("There was an error when executing script", e)
             e.printStackTrace(printStream)
             result.put("error", stream.toString())
+            result.put("exception", e)
         } finally {
             long finishTime = System.currentTimeMillis() - startTime
             log.info("Finish script execution in $finishTime ms")
