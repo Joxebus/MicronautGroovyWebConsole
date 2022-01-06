@@ -26,6 +26,7 @@ dependencies {
     /*implementation("io.micronaut.groovy:micronaut-runtime-groovy") {
         exclude group: 'org.codehaus.groovy', module: 'groovy-bom'
     }*/
+    implementation('com.dropbox.core:dropbox-core-sdk:4.0.1')
     implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
 

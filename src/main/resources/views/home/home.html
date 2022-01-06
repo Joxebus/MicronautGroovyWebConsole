@@ -25,6 +25,7 @@
 
             <div class="actions">
                 <span class="badge bg-success" id="download">Download</span>
+                <span class="badge bg-dark" id="upload-share-code">Share</span>
             </div>
         </form>
     </section>
@@ -43,6 +44,25 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    <input type="hidden" data-bs-toggle="modal" data-bs-target="#shareModal" id="show-modal">
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="shareModalLabel">Here is your link to share</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="code-url" ></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script th:src="@{public/js/home.js}"></script>
 
