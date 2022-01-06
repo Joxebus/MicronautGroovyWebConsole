@@ -1,6 +1,5 @@
 package io.github.joxebus.groovywebconsole.service.common.impl
 
-import groovy.transform.CompileStatic
 import io.github.joxebus.groovywebconsole.pojo.FileResponse
 import io.github.joxebus.groovywebconsole.service.common.FileService
 import io.micronaut.http.server.types.files.SystemFile

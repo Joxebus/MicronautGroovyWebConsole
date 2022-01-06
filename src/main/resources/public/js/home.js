@@ -29,6 +29,7 @@ function init() {
     document.getElementById("execute").onclick = executeCode;
     document.getElementById("download").onclick = downloadCode;
     document.getElementById("upload-share-code").onclick = uploadCode;
+    document.getElementById("copy-url").onclick = copyUrlToClipboard;
 
     function executeCode() {
         console.log("Executing script");
@@ -69,10 +70,11 @@ function init() {
             console.log(this.responseText)
 
             if(request.status === 200) {
-                document.getElementById("code-url").innerText = jsonResult.url;
+                document.getElementById("code-url").value = jsonResult.url;
                 document.getElementById("output").innerText = "Code uploaded!";
                 document.getElementById("error-card").hidden = true
                 document.getElementById("output-card").hidden = false
+                document.getElementById("url-help").hidden = true
                 document.getElementById("show-modal").click();
             } else {
                 document.getElementById("error").innerText = jsonResult.error.message;
@@ -114,6 +116,12 @@ function init() {
                 document.body.removeChild(link);
             }
         }
+    }
+
+    function copyUrlToClipboard() {
+        const url = document.getElementById("code-url").value
+        document.getElementById("url-help").hidden = false
+        navigator.clipboard.writeText(url);
     }
 
     function clearAll() {

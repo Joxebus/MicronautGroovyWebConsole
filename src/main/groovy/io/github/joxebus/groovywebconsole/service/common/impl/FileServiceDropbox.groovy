@@ -101,7 +101,7 @@ class FileServiceDropbox implements FileService {
                 fos.close()
 
             } else {
-                log.debug("Reading [{}] from cache", filename)
+                log.info("Reading [{}] from cache", filename)
                 response = downloaded.bytes
             }
         } catch(Exception e) {
