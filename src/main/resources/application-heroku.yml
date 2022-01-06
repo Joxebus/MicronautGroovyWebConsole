@@ -1,0 +1,6 @@
+micronaut:
+  server:
+    baseUrl: ${BASE_URL}
+
+dropbox:
+  token: ${DROPBOX_TOKEN}

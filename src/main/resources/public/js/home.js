@@ -10,7 +10,10 @@ function init() {
             saveCodeInLocalStorage()
         }, 300000);
 
-        restoreCodeFromLocalStorage();
+        const code = document.getElementById("code").value
+        if(code === "// Write your code here") {
+            restoreCodeFromLocalStorage();
+        }
     } else {
         console.log("Your browser does not support local storage")
     }
@@ -25,6 +28,7 @@ function init() {
     document.getElementById("clear-all").onclick = clearAll;
     document.getElementById("execute").onclick = executeCode;
     document.getElementById("download").onclick = downloadCode;
+    document.getElementById("upload-share-code").onclick = uploadCode;
 
     function executeCode() {
         console.log("Executing script");
@@ -36,7 +40,6 @@ function init() {
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify(requestData));
         request.onload = function() {
-
             const jsonResult = JSON.parse(this.responseText)
             document.getElementById("executionTime").innerText = jsonResult.executionTime;
             if(request.status === 200) {
@@ -45,6 +48,34 @@ function init() {
                 document.getElementById("output-card").hidden = false
             } else {
                 document.getElementById("error").innerText = jsonResult.error;
+                document.getElementById("error-card").hidden = false
+                document.getElementById("output-card").hidden = true
+            }
+        };
+
+    }
+
+    function uploadCode() {
+        console.log("Uploading script");
+        saveCodeInLocalStorage();
+        resetOutputSection();
+        const requestData = { code: editor.getValue()  }
+        const request = new XMLHttpRequest();
+        request.open("POST", "/script/upload", true);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify(requestData));
+        request.onload = function() {
+            const jsonResult = JSON.parse(this.responseText)
+            console.log(this.responseText)
+
+            if(request.status === 200) {
+                document.getElementById("code-url").innerText = jsonResult.url;
+                document.getElementById("output").innerText = "Code uploaded!";
+                document.getElementById("error-card").hidden = true
+                document.getElementById("output-card").hidden = false
+                document.getElementById("show-modal").click();
+            } else {
+                document.getElementById("error").innerText = jsonResult.error.message;
                 document.getElementById("error-card").hidden = false
                 document.getElementById("output-card").hidden = true
             }

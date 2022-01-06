@@ -4,6 +4,7 @@ micronaut:
     name: MicronautGroovyWebConsole
   server:
     port: 8089
+    baseUrl: http://localhost:8089
   views:
     thymeleaf:
       enabled: true
@@ -14,4 +15,11 @@ micronaut:
         enabled: true
         mapping: "/public/**"
         paths: "classpath:public"
+
+file:
+  upload:
+    prefix: ${FILES_UPLOAD_PREFIX:/gwc-system-}         # only for dropbox profile
+    folder: ${FILES_UPLOAD_FOLDER:/tmp/upload_folder/}  # only for local profile
+  cache:
+    folder: ${FILES_CACHE_FOLDER:/tmp/gwc-files-cache}
 
