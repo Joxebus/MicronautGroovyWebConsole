@@ -30,9 +30,9 @@ dependencies {
     implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
 
-    implementation("org.codehaus.groovy:groovy-all:3.0.6")
-    implementation("org.codehaus.groovy:groovy-yaml:3.0.6")
-    implementation("org.codehaus.groovy:groovy-dateutil:3.0.6")
+    implementation("org.codehaus.groovy:groovy-all:3.0.9")
+    implementation("org.codehaus.groovy:groovy-yaml:3.0.9")
+    implementation("org.codehaus.groovy:groovy-dateutil:3.0.9")
 
 
     // Thymeleaf support
