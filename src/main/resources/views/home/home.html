@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <title>Online Groovy Console</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="description" content="This is a console to write and execute Apache Groovy code.">
-    <meta name="robots" content="index, follow" />
-    <head th:include="fragments/header :: header">
-
-</head>
+    <head th:include="fragments/header :: header"></head>
 <body>
 
 <div class="container">
@@ -14,11 +9,31 @@
     <!--div th:replace="fragments/header :: header-nav">&nbsp;</div-->
 
     <section id="code-section">
+
+
         <h1>Online Groovy Console</h1>
-        <p>This console supports Groovy 3.0.9</p>
+        <div class="subtitle">
+            <p>This console supports Groovy 3.0.9</p>
+            <div class="switch">
+                <input type="checkbox" class="switch__input" id="light-mode">
+                <label class="switch__label" for="light-mode">
+                    <span class="switch__indicator"></span>
+                    <span class="switch__decoration"></span>
+                </label>
+            </div>
+        </div>
+
         <form>
+
+
             <div class="actions">
-                <span class="badge bg-primary" id="execute">Execute</span>
+                <span class="badge bg-primary" id="execute">
+                    <!--<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                      <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
+                    </svg>-->
+                    Run
+                </span>
+
                 <span class="badge bg-info text-white" id="clear-output">Clear Output</span>
                 <span class="badge bg-danger" id="clear-all">Clear All</span>
             </div>

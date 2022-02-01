@@ -1,8 +1,16 @@
+const lightModeTheme = "idea";
+const darkModeTheme = "ayu-dark";
+
 window.onload = function() {
     init();
 };
 
 function init() {
+
+    if(parseInt(getBrowserSize().width) < 401){
+        document.getElementById("clear-output").hidden = true;
+        document.getElementById("clear-all").hidden = true;
+    }
 
     if (typeof(Storage) !== "undefined") {
         console.log("Automatic save every 5 minutes on local storage enabled");
@@ -24,12 +32,25 @@ function init() {
         mode: "text/x-groovy"
     });
 
+    restoreThemeFromLocalStorage();
+
+    document.getElementById("light-mode").onchange = selectTheme;
     document.getElementById("clear-output").onclick = resetOutputSection;
     document.getElementById("clear-all").onclick = clearAll;
     document.getElementById("execute").onclick = executeCode;
     document.getElementById("download").onclick = downloadCode;
     document.getElementById("upload-share-code").onclick = uploadCode;
     document.getElementById("copy-url").onclick = copyUrlToClipboard;
+
+    function selectTheme() {
+        const checked = document.getElementById("light-mode").checked;
+        const theme = (checked === true) ? lightModeTheme : darkModeTheme;
+        editor.setOption("theme", theme);
+        if (typeof(Storage) !== "undefined") {
+            console.log("Saving theme ["+ theme +"] in local storage");
+            localStorage.setItem("theme", theme);
+        }
+    }
 
     function executeCode() {
         console.log("Executing script");
@@ -145,6 +166,44 @@ function init() {
             console.log("Saving code in local storage");
             localStorage.setItem("groovyCode", JSON.stringify(editor.getValue().toString().split("\n")));
         }
+    }
+
+    function restoreThemeFromLocalStorage() {
+        if (typeof(Storage) !== "undefined") {
+            const theme = localStorage.getItem("theme");
+            if(theme) {
+                const isDarkModeEnabled = theme !== darkModeTheme;
+                console.log("Restoring theme "+theme+" from local storage")
+                editor.setOption("theme", theme);
+                document.getElementById("light-mode").checked = isDarkModeEnabled;
+            } else {
+                editor.setOption("theme", lightModeTheme);
+                document.getElementById("light-mode").checked = true;
+            }
+
+        } else {
+            editor.setOption("theme", lightModeTheme);
+            document.getElementById("light-mode").checked = true;
+        }
+    }
+
+    function getBrowserSize(){
+        let w, h;
+
+        if(typeof window.innerWidth != 'undefined') {
+            w = window.innerWidth; //other browsers
+            h = window.innerHeight;
+        }
+        else if(typeof document.documentElement != 'undefined'
+                && typeof document.documentElement.clientWidth != 'undefined'
+                && document.documentElement.clientWidth !== 0) {
+            w =  document.documentElement.clientWidth; //IE
+            h = document.documentElement.clientHeight;
+        } else {
+            w = document.body.clientWidth; //IE
+            h = document.body.clientHeight;
+        }
+        return {'width':w, 'height': h};
     }
 
     function restoreCodeFromLocalStorage() {
