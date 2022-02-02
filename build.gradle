@@ -1,15 +1,14 @@
 plugins {
     id("groovy")
-    id("com.github.johnrengelman.shadow") version "6.1.0"
-    id("io.micronaut.application") version "1.3.4"
+    id("com.github.johnrengelman.shadow") version "7.1.1"
+    id("io.micronaut.application") version "3.2.0"
 }
 
-version = "0.1"
+version = "1.0"
 group = "com.github.joxebus"
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 micronaut {
@@ -22,6 +21,7 @@ micronaut {
 }
 
 dependencies {
+    implementation("javax.inject:javax.inject:1")
     implementation("io.micronaut:micronaut-validation")
     /*implementation("io.micronaut.groovy:micronaut-runtime-groovy") {
         exclude group: 'org.codehaus.groovy', module: 'groovy-bom'
@@ -36,7 +36,7 @@ dependencies {
 
 
     // Thymeleaf support
-    compile "io.micronaut.views:micronaut-views-thymeleaf"
+    implementation("io.micronaut.views:micronaut-views-thymeleaf")
 }
 
 
@@ -45,8 +45,8 @@ application {
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("1.8")
-    targetCompatibility = JavaVersion.toVersion("1.8")
+    sourceCompatibility = JavaVersion.toVersion("11")
+    targetCompatibility = JavaVersion.toVersion("11")
 }
 
 test {
