@@ -5,9 +5,9 @@ compatible with Groovy 3.0.6, this project is builtin with Micronaut.
 
 ## Technologies
 
-- Groovy 3.0.6
-- Micronaut 2.3.2  
-- Gradle 6.X
+- Groovy 3.0.9
+- Micronaut 3.3.0  
+- Gradle 7.3.3
 - Thymeleaf 2.2.1
 - Bootstrap 5
 
