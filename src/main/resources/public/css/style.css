@@ -1,0 +1,46 @@
+.card-body {
+    min-height: 100px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cm-s-idea {
+    background: url(../img/joxebus-icon.png) no-repeat 98% bottom !important;
+}
+
+.cm-s-blackboard {
+    background:#0C1021 url(../img/joxebus-icon.png) no-repeat 98% bottom !important;
+}
+
+@media screen and (min-width: 0px) and (max-width: 599px) {
+    #shortcuts { display: none; }  /* show it on small screens */
+}
+
+.actions {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.actions .badge {
+    cursor: pointer;
+}
+
+.actions .badge:hover {
+    -moz-box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+    -webkit-box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+}
+
+.subtitle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.switch {
+    display: inline-block;
+    position: relative;
+}
+
+.switch button {
+    border-radius: 50%;
+}
