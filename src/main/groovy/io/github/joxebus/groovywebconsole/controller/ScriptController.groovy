@@ -44,7 +44,7 @@ class ScriptController {
         scriptFileGeneratorService.generateGroovyCodeFile(groovyScript.code)
     }
 
-    @Post(value ="/upload", consumes = MediaType.APPLICATION_JSON, produces = GROOVY_MIME_TYPE)
+    @Post(value ="/upload", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     HttpResponse<FileResponse> upload(@Body Map groovyScript) {
         SystemFile systemFile = scriptFileGeneratorService.generateGroovyCodeFile(groovyScript.code)
         FileResponse fileResponse = fileService.upload(systemFile)

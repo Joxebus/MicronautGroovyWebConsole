@@ -22,7 +22,10 @@ CodeMirror.defineMode("groovy", function(config) {
     "do double else enum extends final finally float for goto if implements import in " +
     "instanceof int interface long native new package private protected public return " +
     "short static strictfp super switch synchronized threadsafe throw throws trait transient " +
-    "try void volatile while");
+    "try void volatile while println print "+
+    "Integer Boolean Float Long Character String StringBuilder StringBuffer Closure "+
+    "List Map Set Tree");
+
   var blockKeywords = words("catch class def do else enum finally for if interface switch trait try while");
   var standaloneKeywords = words("return break continue");
   var atoms = words("null true false this");

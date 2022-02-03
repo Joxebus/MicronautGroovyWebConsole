@@ -1,0 +1,82 @@
+.card-body {
+    min-height: 100px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cm-s-idea {
+    background: url(../img/joxebus-icon.png) no-repeat 98% bottom !important;
+}
+
+.cm-s-blackboard {
+    background:#0C1021 url(../img/joxebus-icon.png) no-repeat 98% bottom !important;
+}
+
+/* show it on small screens */
+@media screen and (min-width: 0px) and (max-width: 599px) {
+    #shortcuts { display: none; }
+    .cm-s-idea {
+        background: url(../img/joxebus-icon-small.png) no-repeat 98% bottom !important;
+    }
+    .cm-s-blackboard {
+        background:#0C1021 url(../img/joxebus-icon-small.png) no-repeat 98% bottom !important;
+    }
+}
+
+.actions {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.actions .badge {
+    cursor: pointer;
+}
+
+.actions .badge:hover {
+    -moz-box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+    -webkit-box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+}
+
+.subtitle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.switch {
+    display: inline-block;
+    position: relative;
+}
+
+.switch button {
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+}
+
+.spinner {
+    position: fixed;
+    z-index: 999;
+    height: 5em;
+    width: 5em;
+    overflow: auto;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+    background: url(../img/spinner.gif) center no-repeat #fff;
+}
+
+/* Transparent Overlay */
+.spinner:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+}

@@ -2,31 +2,28 @@
 <head lang="en" th:fragment="header">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="description" content="This is a console to write and execute Apache Groovy code.">
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Online Groovy Console - Write, Run and Share your code." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://github.com/Joxebus/MicronautGroovyWebConsole/blob/main/img/console.png?raw=true" />
+    <meta property="og:url" content="https://onlinegroovyconsole.herokuapp.com/" />
+
     <link rel="shortcut icon" th:href="@{public/img/favicon.ico}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+    <link th:href="@{public/css/style.css}" type="text/css" rel="stylesheet" />
     <link th:href="@{public/codemirror/css/codemirror.css}" type="text/css" rel="stylesheet" />
     <script th:src="@{public/codemirror/js/codemirror.js}"></script>
+    <script th:src="@{public/codemirror/addon/selection/active-line.js}"></script>
+    <script th:src="@{public/codemirror/addon/edit/matchbrackets.js}"></script>
     <script th:src="@{public/codemirror/mode/groovy/groovy.js}"></script>
 
-    <style>
-        .card-body {
-            min-height: 100px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .actions .badge {
-            cursor: pointer;
-        }
-
-        .actions .badge:hover {
-            -moz-box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-            -webkit-box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-            box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-        }
-    </style>
+    <link type="text/css" rel="stylesheet" th:href="@{public/codemirror/css/codemirror.css}"  />
+    <link type="text/css" rel="stylesheet" th:href="@{public/codemirror/css/theme/blackboard.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{public/codemirror/css/theme/idea.css}">
 
 </head>
 

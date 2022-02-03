@@ -18,36 +18,38 @@ class ScriptExecutorService {
         this.scriptSecurityManager = scriptSecurityManager
     }
 
-    Map execute(String scriptText) {
+    synchronized Map execute(String scriptText) {
+        log.info("Start execution of the script")
         Map result = [:]
         System.setSecurityManager(scriptSecurityManager)
         String encoding = 'UTF-8'
         ByteArrayOutputStream stream = new ByteArrayOutputStream()
         PrintStream printStream = new PrintStream(stream, true, encoding)
+        PrintStream defaultOut = System.out
 
         Binding binding = new Binding([out: printStream])
         GroovyShell shell = createShell(binding)
         long startTime = System.currentTimeMillis()
         try {
-            log.info("Start execution of the script")
+            System.setOut(printStream)
             shell.evaluate(scriptText)
             result.put("output", stream.toString())
         } catch(Exception | Error e) {
-            log.error("There was an error when executing script", e)
             e.printStackTrace(printStream)
             result.put("error", stream.toString())
             result.put("exception", e)
         } finally {
+            System.setOut(defaultOut)
             long finishTime = System.currentTimeMillis() - startTime
-            log.info("Finish script execution in $finishTime ms")
             result.put("executionTime", "Execution time: $finishTime ms".toString())
+            log.info("Finish script execution in $finishTime ms")
         }
         result
     }
 
     private GroovyShell createShell(Binding binding) {
-        ClassLoader parentClassLoader = ScriptExecutorService.class.getClassLoader();
-        ScriptSecurityClassLoader scriptClassLoader = new ScriptSecurityClassLoader(parentClassLoader);
+        ClassLoader parentClassLoader = ScriptExecutorService.class.getClassLoader()
+        ScriptSecurityClassLoader scriptClassLoader = new ScriptSecurityClassLoader(parentClassLoader)
         new GroovyShell(scriptClassLoader, binding)
     }
 }
