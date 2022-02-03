@@ -12,6 +12,7 @@ const ELEMENT_OUTPUT_CARD = "output-card";
 const ELEMENT_URL_HELP = "url-help";
 const ELEMENT_SHOW_MODAL = "show-modal";
 const ELEMENT_ERROR = "error";
+const ELEMENT_SPINNER = "spinner";
 
 const ELEMENT_BTN_LIGHT_MODE = "light-mode";
 const ELEMENT_BTN_DARK_MODE = "dark-mode";
@@ -94,6 +95,7 @@ function init() {
 
     function executeCode() {
         console.log("Executing script");
+        const timeoutId = showSpinner();
         saveCodeInLocalStorage();
         resetOutputSection();
         const requestData = { code: editor.getValue()  }
@@ -102,6 +104,7 @@ function init() {
         request.setRequestHeader(HEADER_CONTENT_TYPE, MEDIA_TYPE_JSON);
         request.send(JSON.stringify(requestData));
         request.onload = function() {
+            hideSpinner(timeoutId);
             const jsonResult = JSON.parse(this.responseText)
             document.getElementById(ELEMENT_EXECUTION_TIME).innerText = jsonResult.executionTime;
             if(request.status === 200) {
@@ -119,6 +122,7 @@ function init() {
 
     function uploadCode() {
         console.log("Uploading script");
+        const timeoutId = showSpinner();
         saveCodeInLocalStorage();
         resetOutputSection();
         const requestData = { code: editor.getValue()  }
@@ -127,6 +131,7 @@ function init() {
         request.setRequestHeader(HEADER_CONTENT_TYPE, MEDIA_TYPE_JSON);
         request.send(JSON.stringify(requestData));
         request.onload = function() {
+            hideSpinner(timeoutId);
             const jsonResult = JSON.parse(this.responseText)
             console.log(this.responseText)
 
@@ -148,6 +153,7 @@ function init() {
 
     function downloadCode() {
         console.log("Downloading script");
+        const timeoutId = showSpinner();
         saveCodeInLocalStorage();
         const requestData = { code: editor.getValue()  }
         const request = new XMLHttpRequest();
@@ -157,6 +163,7 @@ function init() {
         request.send(JSON.stringify(requestData));
 
         request.onload = function() {
+            hideSpinner(timeoutId);
             // Only handle status code 200
             if(request.status === 200) {
                 // Try to find out the filename from the content disposition `filename` value
@@ -277,6 +284,18 @@ function init() {
                     break;
             }
         }
+    }
+
+    function showSpinner() {
+        return setTimeout(function () {
+            document.getElementById(ELEMENT_SPINNER).style.display = "block";
+        }, 1000);
+
+    }
+
+    function hideSpinner(spinnerTimeoutId) {
+        clearTimeout(spinnerTimeoutId);
+        document.getElementById(ELEMENT_SPINNER).style.display = "none";
     }
 
     document.onkeydown = keyPressShortcuts;
