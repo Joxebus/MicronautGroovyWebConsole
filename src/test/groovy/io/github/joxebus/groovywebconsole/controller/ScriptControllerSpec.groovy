@@ -1,5 +1,6 @@
 package io.github.joxebus.groovywebconsole.controller
 
+import io.github.joxebus.groovywebconsole.pojo.FileResponse
 import io.github.joxebus.groovywebconsole.util.ScriptControllerClient
 import io.github.joxebus.groovywebconsole.util.ScriptEndOfFileTrait
 import io.micronaut.context.ApplicationContext
@@ -83,6 +84,36 @@ class ScriptControllerSpec extends Specification implements ScriptEndOfFileTrait
         then:
         result.status == HttpStatus.OK
         result.body.get().output == withEof("100.0\n50.0\n150.0\n3.0")
+    }
+
+    def "Upload and save script"() {
+        given:
+        Map params = [code:"println 'Testing upload script'"]
+
+        when:
+        def result = client.upload(params)
+        FileResponse fileResponse = result.body.get()
+        int index = fileResponse.url.lastIndexOf('/') + 1
+        String filename = fileResponse.url.substring(index)
+
+        then:
+        result.status == HttpStatus.OK
+        fileResponse.uploaded
+        filename.size() == 36
+
+    }
+
+    def "Download script"() {
+        given:
+        Map params = [code:"println 'Testing download script'"]
+
+        when:
+        def result = client.downloadScript(params)
+
+        then:
+        result.status == HttpStatus.OK
+        result.body.get() == withEof(params.code)
+
     }
 
     def "Return error when operation is not allowed"() {
