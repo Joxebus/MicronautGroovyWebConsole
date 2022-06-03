@@ -59,8 +59,9 @@ function init() {
 
     const editor = CodeMirror.fromTextArea(document.getElementById(ELEMENT_CODE_EDITOR), {
         styleActiveLine: true,
-        lineNumbers: true,
         matchBrackets: true,
+        autoCloseBrackets: true,
+        lineNumbers: true,
         mode: "text/x-groovy"
     });
 

@@ -99,6 +99,26 @@ class ScriptExecutorServiceSpec extends Specification implements ScriptEndOfFile
         ]
     }
 
+    def "Test println inside another level produces output expected"() {
+        setup:
+        String script = '''
+        def doSomething = {
+          println "Second level text"
+          if(true) {
+             println "Third level text"
+          }
+        }
+        
+        println "First level text"
+        doSomething()
+        '''
+        when:
+        Map result = scriptExecutorService.execute(script)
+
+        then:
+        result.output == withEof("First level text\nSecond level text\nThird level text")
+    }
+
     def "Test System.exit is not a valid script to execute"() {
         when:
         Map result = scriptExecutorService.execute(script)
