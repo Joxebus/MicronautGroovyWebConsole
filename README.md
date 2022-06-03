@@ -29,9 +29,9 @@ compatible with Groovy 3.0.6, this project is builtin with Micronaut.
 Startup completed in 668ms. Server Running: http://localhost:8089
 ```
 
-## Sample codes
+## Code Samples
 
-You can see some of [my sample codes](https://gist.github.com/Joxebus "Joxebus's Gists") at my gist.
+You can see some [code samples](https://gist.github.com/Joxebus "Joxebus's Gists") at my gist.
 
 ## License
 
