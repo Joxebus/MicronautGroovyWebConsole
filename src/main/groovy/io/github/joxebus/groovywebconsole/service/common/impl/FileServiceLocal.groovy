@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @CompileStatic
 @Requires(env = "local")
 @Slf4j
-class FileServiceImpl implements FileService {
+class FileServiceLocal implements FileService {
 
     @Value('${file.upload.folder}')
     private String fileUploadFolder
