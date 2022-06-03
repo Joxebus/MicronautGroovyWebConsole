@@ -13,7 +13,7 @@ compatible with Groovy 3.0.6, this project is builtin with Micronaut.
 
 ## Preview
 
-![online-groovy-console](https://github.com/Joxebus/MicronautGroovyWebConsole/blob/main/img/console.png?raw=true)
+![online-groovy-console](img/console.png)
 
 ## Build project
 
@@ -35,4 +35,4 @@ You can see some of [my sample codes](https://gist.github.com/Joxebus "Joxebus's
 
 ## License
 
-This project is under [Apache 2.0 License](https://github.com/Joxebus/MicronautGroovyWebConsole/blob/main/LICENSE "See license here")
+This project is under [Apache 2.0 License](LICENSE "See license here")
