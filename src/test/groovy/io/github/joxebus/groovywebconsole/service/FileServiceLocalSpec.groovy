@@ -15,7 +15,7 @@ class FileServiceLocalSpec extends Specification implements ScriptEndOfFileTrait
     @Shared
     String baseUrl = "test"
     @Shared
-    String fileUploadFolder = "/tmp/test/upload_folder/"
+    String fileUploadFolder = "build/tmp/test/upload_folder/"
 
     @Shared
     ScriptFileGeneratorService scriptFileGeneratorService
