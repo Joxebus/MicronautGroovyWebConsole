@@ -1,6 +1,14 @@
 ---
 micronaut:
   server:
-    port: 18080
+    port: ${random.port}
+    baseUrl: http://localhost:${random.port}
   security:
     enabled: false
+
+file:
+  upload:
+    prefix: ${FILES_UPLOAD_PREFIX:/test-gwc-system-}         # only for dropbox profile
+    folder: ${FILES_UPLOAD_FOLDER:build/tmp/test/upload_folder/}  # only for local profile
+  cache:
+    folder: ${FILES_CACHE_FOLDER:build/tmp/test/gwc-files-cache}
