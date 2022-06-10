@@ -1,6 +1,2 @@
 dropbox:
   token: ${DROPBOX_TOKEN}
-
-file:
-  upload:
-    prefix: ${FILES_UPLOAD_PREFIX:/gwc-system-}         # only for dropbox profile

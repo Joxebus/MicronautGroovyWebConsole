@@ -8,6 +8,7 @@ import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import io.github.joxebus.groovywebconsole.pojo.FileResponse
 import io.github.joxebus.groovywebconsole.service.common.FileService
+import io.github.joxebus.groovywebconsole.service.common.FileServiceCache
 import io.micronaut.context.annotation.Requires
 import io.micronaut.context.annotation.Value
 import io.micronaut.http.server.types.files.SystemFile
@@ -19,11 +20,10 @@ import javax.inject.Singleton
 @CompileStatic
 @Requires(env = "dropbox")
 @Slf4j
-class FileServiceDropbox implements FileService {
+class FileServiceDropbox implements FileService, FileServiceCache {
 
     private DbxClientV2 client;
     private String fileUploadPrefix
-    private String fileCacheFolder
 
     @Value('${micronaut.server.baseUrl}')
     private String baseUrl
@@ -39,16 +39,7 @@ class FileServiceDropbox implements FileService {
 
     @PostConstruct
     private final void init() {
-        File file = new File(fileCacheFolder)
-        log.info("Using folder [$fileCacheFolder] to cache files")
-        if(!file.exists()) {
-            log.warn("File folder not found, trying to create new folder")
-            if(!file.mkdirs()) {
-                log.error("File cache folder cannot be created")
-                System.exit(1)
-            }
-            log.info("File folder created in location: [$fileCacheFolder]")
-        }
+        initCache()
     }
 
     @Override
@@ -65,10 +56,7 @@ class FileServiceDropbox implements FileService {
 
             log.debug("Saving file into url: {}", metadata.getPathLower())
 
-            log.debug("Saving copy on cache for file ${filename}")
-            FileOutputStream fos = new FileOutputStream(new File(fileCacheFolder, filename))
-            fos.write(systemFile.file.getBytes())
-            fos.close()
+            saveToCache(filename, systemFile.file.getBytes())
 
             fileResponse.uploaded = true
             fileResponse.url = "${baseUrl}/${filename}"
@@ -95,10 +83,7 @@ class FileServiceDropbox implements FileService {
                 response = out.toByteArray()
                 out.close()
 
-                log.debug("Saving copy on cache for file ${filename}")
-                FileOutputStream fos = new FileOutputStream(new File(fileCacheFolder, filename))
-                fos.write(response)
-                fos.close()
+                saveToCache(filename, response)
 
             } else {
                 log.info("Reading [{}] from cache", filename)
@@ -106,7 +91,6 @@ class FileServiceDropbox implements FileService {
             }
         } catch(Exception e) {
             log.error('Error: The file cannot be download', e)
-            null
         }
         response
     }
