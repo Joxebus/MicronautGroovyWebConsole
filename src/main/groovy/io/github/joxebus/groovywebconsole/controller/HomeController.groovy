@@ -35,7 +35,7 @@ class HomeController {
             SystemFile code = fileService.download(uuid)
             SystemFile screenShot = fileService.download(imageName)
             imageUrl = screenShot ? baseUrl.concat("/image/download/").concat(imageName) : defaultImage
-            groovyScript = code ? new String(code.file.bytes) : groovyScript
+            groovyScript = code?.file?.text ?: groovyScript
         }
 
         new ModelAndView("home/home", [groovyScript: groovyScript, imageUrl: imageUrl])
