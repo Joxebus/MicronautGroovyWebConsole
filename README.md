@@ -46,9 +46,6 @@ There are 3 available profiles `local`, `dropbox`, `aws` and `heroku`
 - `local`: Use a local storage to save files at configured at `application.yml`
 - `dropbox`: Use the dropbox configuration to save files also you may need to provide `DROPBOX_TOKEN` 
 setting up directly at `application-dropbox.yml` or by env variables.
-- `aws`: Use the aws configuration to save files into S3 also you need to provide `AWS_REGION`,
-`AWS_BUCKET_NAME`, `AWS_ACCESS_KEY`, `AWS_SECRET_KEY` you can set up this as env variables or
-modify directly modifying the file `application-aws.yml`
 
 ## Code Samples
 

@@ -7,7 +7,6 @@ plugins {
 ext {
     groovyVersion = "3.0.9"
     dropboxVersion = "4.0.1"
-    awsVersion = "1.11.163"
 }
 
 version = "1.0"
@@ -33,7 +32,6 @@ dependencies {
         exclude group: 'org.codehaus.groovy', module: 'groovy-bom'
     }*/
     implementation("com.dropbox.core:dropbox-core-sdk:${dropboxVersion}")
-    implementation("com.amazonaws:aws-java-sdk:${awsVersion}")
     implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
 
