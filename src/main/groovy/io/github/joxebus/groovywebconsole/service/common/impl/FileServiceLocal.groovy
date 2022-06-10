@@ -37,22 +37,22 @@ class FileServiceLocal implements FileService {
     }
 
     @Override
-    FileResponse upload(SystemFile file) {
+    FileResponse upload(String filename, File file) {
         FileResponse fileResponse = new FileResponse()
         try {
-            if(!file || !file.getFile()) {
+            if(!file) {
                 throw new RuntimeException("Failed to create empty file");
             }
 
-            String filename = UUID.randomUUID().toString()
-            File destination = new File(fileUploadFolder, filename)
+            String name = filename ?: UUID.randomUUID().toString()
+            File destination = new File(fileUploadFolder, name)
             FileOutputStream fos = new FileOutputStream(destination)
-            fos.write(file.getFile().getBytes())
+            fos.write(file.getBytes())
             fos.close()
 
             fileResponse.uploaded = true
-            fileResponse.url = "${baseUrl}/${filename}"
-            log.info("File [${filename}] successfully saved")
+            fileResponse.url = "${baseUrl}/${name}"
+            log.info("File [${name}] successfully saved")
         } catch(Exception e) {
             fileResponse.uploaded = false
             fileResponse.error = FileResponse.newError(e.getMessage())

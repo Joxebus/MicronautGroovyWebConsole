@@ -43,23 +43,19 @@ class FileServiceDropbox implements FileService, FileServiceCache {
     }
 
     @Override
-    FileResponse upload(SystemFile systemFile) {
+    FileResponse upload(String filename, File file) {
         FileResponse fileResponse = new FileResponse()
         try {
-            if(!systemFile || !systemFile.file) {
-                throw new RuntimeException("Failed to create empty file");
-            }
-
-            String filename = UUID.randomUUID().toString()
-            FileMetadata metadata = client.files().uploadBuilder(fileUploadPrefix.concat(filename))
-                    .uploadAndFinish(systemFile.file.newInputStream())
+            String name = filename ?: UUID.randomUUID().toString()
+            FileMetadata metadata = client.files().uploadBuilder(fileUploadPrefix.concat(name))
+                    .uploadAndFinish(file.newInputStream())
 
             log.debug("Saving file into url: {}", metadata.getPathLower())
 
-            saveToCache(filename, systemFile.file.getBytes())
+            saveToCache(filename, file.getBytes())
 
             fileResponse.uploaded = true
-            fileResponse.url = "${baseUrl}/${filename}"
+            fileResponse.url = "${baseUrl}/${name}"
             log.info("File [${filename}] successfully saved")
         } catch(Exception e) {
             fileResponse.uploaded = false
@@ -67,7 +63,6 @@ class FileServiceDropbox implements FileService, FileServiceCache {
             log.error("Error: file cannot be uploaded", e)
         }
         fileResponse
-
     }
 
     @Override

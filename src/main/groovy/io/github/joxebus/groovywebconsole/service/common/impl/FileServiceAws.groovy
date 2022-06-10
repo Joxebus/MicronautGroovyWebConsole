@@ -69,25 +69,25 @@ class FileServiceAws implements FileService, FileServiceCache {
     }
 
     @Override
-    FileResponse upload(SystemFile systemFile) {
+    FileResponse upload(String filename, File file) {
         FileResponse fileResponse = new FileResponse()
         try {
-            if(!systemFile || !systemFile.file) {
+            if(!file) {
                 throw new RuntimeException("Failed to create empty file");
             }
-            String filename = UUID.randomUUID().toString()
+            String name = filename ?: UUID.randomUUID().toString()
             s3client.putObject(
                     bucketName,
-                    fileUploadPrefix.concat(filename),
-                    systemFile.file)
+                    fileUploadPrefix.concat(name),
+                    file)
 
             log.debug("Saving file into bucket: ${bucketName}")
 
-            saveToCache(filename, systemFile.file.getBytes())
+            saveToCache(name, file.getBytes())
 
             fileResponse.uploaded = true
-            fileResponse.url = "${baseUrl}/${filename}"
-            log.info("File [${filename}] successfully saved")
+            fileResponse.url = "${baseUrl}/${name}"
+            log.info("File [${name}] successfully saved")
         } catch (SdkClientException e) {
             fileResponse.uploaded = false
             fileResponse.error = FileResponse.newError(e.getMessage())
