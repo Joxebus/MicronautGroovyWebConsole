@@ -52,7 +52,7 @@ class FileServiceDropbox implements FileService, FileServiceCache {
 
             log.debug("Saving file into url: {}", metadata.getPathLower())
 
-            saveToCache(filename, file.getBytes())
+            saveToCache(name, file.getBytes())
 
             fileResponse.uploaded = true
             fileResponse.url = "${baseUrl}/${name}"
