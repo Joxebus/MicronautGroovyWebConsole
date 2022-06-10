@@ -45,7 +45,9 @@
                 <span class="badge bg-danger" id="clear-all">Clear All</span>
             </div>
 
-            <textarea id="code" name="code" th:text="${groovyScript}"></textarea>
+            <div id="code-area">
+                <textarea id="code" name="code" th:text="${groovyScript}"></textarea>
+            </div>
 
             <div class="actions">
                 <span class="badge bg-success" id="download">
