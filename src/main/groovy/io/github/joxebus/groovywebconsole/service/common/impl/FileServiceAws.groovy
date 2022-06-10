@@ -97,22 +97,23 @@ class FileServiceAws implements FileService, FileServiceCache {
     }
 
     @Override
-    byte[] download(String filename) {
-        byte[] response = null
+    SystemFile download(String filename) {
+        SystemFile response
         try {
             File downloaded = new File(fileCacheFolder, filename)
             if(!downloaded.exists()) {
                 log.info("Downloading [{}] from aws", filename)
                 S3Object s3object = s3client.getObject(bucketName, fileUploadPrefix.concat(filename))
                 S3ObjectInputStream inputStream = s3object.getObjectContent()
-                response = inputStream.bytes
 
-                saveToCache(filename, response)
+                downloaded.bytes = inputStream.bytes
+                saveToCache(filename, downloaded.bytes)
 
             } else {
                 log.info("Reading [{}] from cache", filename)
-                response = downloaded.bytes
             }
+            response = new SystemFile(downloaded)
+            response.attach(filename)
         } catch(SdkClientException e) {
             log.error("There was an error trying to get the file from S3", e)
         }

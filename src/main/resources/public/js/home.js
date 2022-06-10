@@ -253,7 +253,7 @@ function init() {
                     let formData = new FormData();
 
                     formData.append("file", screenShot, filename);
-                    request.open("POST", '/script/upload/image');
+                    request.open("POST", '/image/upload');
                     request.send(formData);
                 });
 

@@ -66,8 +66,8 @@ class FileServiceDropbox implements FileService, FileServiceCache {
     }
 
     @Override
-    byte[] download(String filename) {
-        byte[] response = null
+    SystemFile download(String filename) {
+        SystemFile response
         try {
             File downloaded = new File(fileCacheFolder, filename)
             if(!downloaded.exists()) {
@@ -75,15 +75,16 @@ class FileServiceDropbox implements FileService, FileServiceCache {
                 DbxDownloader download = client.files().download(fileUploadPrefix.concat(filename))
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 download.download(out)
-                response = out.toByteArray()
+                downloaded.bytes = out.toByteArray()
                 out.close()
 
-                saveToCache(filename, response)
+                saveToCache(filename, downloaded.bytes)
 
             } else {
                 log.info("Reading [{}] from cache", filename)
-                response = downloaded.bytes
             }
+            response = new SystemFile(downloaded)
+            response.attach(filename)
         } catch(Exception e) {
             log.error('Error: The file cannot be download', e)
         }

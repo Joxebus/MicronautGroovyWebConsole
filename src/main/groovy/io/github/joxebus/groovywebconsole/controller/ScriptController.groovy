@@ -8,9 +8,7 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Part
 import io.micronaut.http.annotation.Post
-import io.micronaut.http.multipart.CompletedFileUpload
 import io.micronaut.http.server.types.files.SystemFile
 
 @Controller("/script")
@@ -50,18 +48,6 @@ class ScriptController {
     HttpResponse<FileResponse> upload(@Body Map groovyScript) {
         SystemFile systemFile = scriptFileGeneratorService.generateGroovyCodeFile(groovyScript.code)
         FileResponse fileResponse = fileService.upload(systemFile)
-        if(fileResponse.error) {
-            HttpResponse.serverError(fileResponse)
-        } else {
-            HttpResponse.ok(fileResponse)
-        }
-    }
-
-    @Post(value ="/upload/image", consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
-    HttpResponse<FileResponse> uploadImage(@Part CompletedFileUpload file) {
-        File image = new File(System.getProperty("java.io.tmpdir"), file.filename)
-        image.bytes = file.bytes
-        FileResponse fileResponse = fileService.upload(file.filename, image)
         if(fileResponse.error) {
             HttpResponse.serverError(fileResponse)
         } else {

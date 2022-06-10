@@ -62,17 +62,20 @@ class FileServiceLocal implements FileService {
     }
 
 
-    byte[] download(String name) {
+    SystemFile download(String filename) {
+        SystemFile response
         try {
-            File downloaded = new File(fileUploadFolder, name)
+            File downloaded = new File(fileUploadFolder, filename)
             if(!downloaded.exists()) {
-                throw new RuntimeException("File [${name}] doesn't exist")
+                throw new RuntimeException("File [${filename}] doesn't exist")
             }
-            downloaded.bytes
+            response = new SystemFile(downloaded)
+            response.attach(filename)
         } catch(Exception e) {
             log.error('The file cannot be downloaded', e)
             null
         }
+        response
     }
 
 }

@@ -16,5 +16,5 @@ interface FileService {
 
     FileResponse upload(String filename, File file)
 
-    byte[] download(String filename)
+    SystemFile download(String filename)
 }

@@ -16,6 +16,9 @@ micronaut:
         mapping: "/public/**"
         paths: "classpath:public"
 
+social:
+  banner: "https://github.com/Joxebus/MicronautGroovyWebConsole/blob/main/img/online_groovy_console_banner.png?raw=true"
+
 file:
   upload:
     folder: ${FILES_UPLOAD_FOLDER:/tmp/upload_folder/}  # only for local profile
