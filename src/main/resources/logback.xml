@@ -7,7 +7,7 @@
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
-    <logger name="io.github.joxebus" level="DEBUG"/> <!--1-->
+    <logger name="io.github.joxebus" level="INFO"/> <!--1-->
     <logger name="io.micronaut" level="INFO"/> <!--2-->
     <root level="info">
         <appender-ref ref="STDOUT" />
