@@ -29,16 +29,18 @@ class HomeController {
     @Get('/{uuid}')
     ModelAndView home(String uuid){
         String groovyScript = "// Write your code here"
+        String siteUrl = baseUrl
         String imageUrl = defaultImage
         if(uuid) {
             String imageName = uuid.concat(".png")
             SystemFile code = fileService.download(uuid)
             SystemFile screenShot = fileService.download(imageName)
-            imageUrl = screenShot ? baseUrl.concat("/image/download/").concat(imageName) : defaultImage
+            siteUrl = "${siteUrl}/${uuid}"
+            imageUrl = screenShot ? "${baseUrl}/image/download/${imageName}" : defaultImage
             groovyScript = code?.file?.text ?: groovyScript
         }
 
-        new ModelAndView("home/home", [groovyScript: groovyScript, imageUrl: imageUrl])
+        new ModelAndView("home/home", [groovyScript: groovyScript, imageUrl: imageUrl, siteUrl: siteUrl])
     }
 
 }
