@@ -8,6 +8,7 @@ import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import io.github.joxebus.groovywebconsole.pojo.FileResponse
 import io.github.joxebus.groovywebconsole.service.common.FileService
+import io.github.joxebus.groovywebconsole.service.common.FileServiceCache
 import io.micronaut.context.annotation.Requires
 import io.micronaut.context.annotation.Value
 import io.micronaut.http.server.types.files.SystemFile
@@ -19,11 +20,10 @@ import javax.inject.Singleton
 @CompileStatic
 @Requires(env = "dropbox")
 @Slf4j
-class FileServiceDropbox implements FileService {
+class FileServiceDropbox implements FileService, FileServiceCache {
 
     private DbxClientV2 client;
     private String fileUploadPrefix
-    private String fileCacheFolder
 
     @Value('${micronaut.server.baseUrl}')
     private String baseUrl
@@ -39,39 +39,23 @@ class FileServiceDropbox implements FileService {
 
     @PostConstruct
     private final void init() {
-        File file = new File(fileCacheFolder)
-        log.info("Using folder [$fileCacheFolder] to cache files")
-        if(!file.exists()) {
-            log.warn("File folder not found, trying to create new folder")
-            if(!file.mkdirs()) {
-                log.error("File cache folder cannot be created")
-                System.exit(1)
-            }
-            log.info("File folder created in location: [$fileCacheFolder]")
-        }
+        initCache()
     }
 
     @Override
-    FileResponse upload(SystemFile systemFile) {
+    FileResponse upload(String filename, File file) {
         FileResponse fileResponse = new FileResponse()
         try {
-            if(!systemFile || !systemFile.file) {
-                throw new RuntimeException("Failed to create empty file");
-            }
-
-            String filename = UUID.randomUUID().toString()
-            FileMetadata metadata = client.files().uploadBuilder(fileUploadPrefix.concat(filename))
-                    .uploadAndFinish(systemFile.file.newInputStream())
+            String name = filename ?: UUID.randomUUID().toString()
+            FileMetadata metadata = client.files().uploadBuilder(fileUploadPrefix.concat(name))
+                    .uploadAndFinish(file.newInputStream())
 
             log.debug("Saving file into url: {}", metadata.getPathLower())
 
-            log.debug("Saving copy on cache for file ${filename}")
-            FileOutputStream fos = new FileOutputStream(new File(fileCacheFolder, filename))
-            fos.write(systemFile.file.getBytes())
-            fos.close()
+            saveToCache(filename, file.getBytes())
 
             fileResponse.uploaded = true
-            fileResponse.url = "${baseUrl}/${filename}"
+            fileResponse.url = "${baseUrl}/${name}"
             log.info("File [${filename}] successfully saved")
         } catch(Exception e) {
             fileResponse.uploaded = false
@@ -79,12 +63,11 @@ class FileServiceDropbox implements FileService {
             log.error("Error: file cannot be uploaded", e)
         }
         fileResponse
-
     }
 
     @Override
-    byte[] download(String filename) {
-        byte[] response = null
+    SystemFile download(String filename) {
+        SystemFile response
         try {
             File downloaded = new File(fileCacheFolder, filename)
             if(!downloaded.exists()) {
@@ -92,21 +75,18 @@ class FileServiceDropbox implements FileService {
                 DbxDownloader download = client.files().download(fileUploadPrefix.concat(filename))
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 download.download(out)
-                response = out.toByteArray()
+                downloaded.bytes = out.toByteArray()
                 out.close()
 
-                log.debug("Saving copy on cache for file ${filename}")
-                FileOutputStream fos = new FileOutputStream(new File(fileCacheFolder, filename))
-                fos.write(response)
-                fos.close()
+                saveToCache(filename, downloaded.bytes)
 
             } else {
                 log.info("Reading [{}] from cache", filename)
-                response = downloaded.bytes
             }
+            response = new SystemFile(downloaded)
+            response.attach(filename)
         } catch(Exception e) {
             log.error('Error: The file cannot be download', e)
-            null
         }
         response
     }

@@ -62,12 +62,10 @@ class FileServiceLocalSpec extends Specification implements ScriptEndOfFileTrait
         String filename = fileResponse.url.replace(baseUrl+"/", "")
 
         when:
-        byte[] bytes = fileService.download(filename)
-        File file = new File(fileUploadFolder, UUID.randomUUID().toString())
-        file.bytes = bytes
+        SystemFile downloaded = fileService.download(filename)
 
         then:
         fileResponse.uploaded
-        withEof(script) == file.text
+        withEof(script) == downloaded.file.text
     }
 }

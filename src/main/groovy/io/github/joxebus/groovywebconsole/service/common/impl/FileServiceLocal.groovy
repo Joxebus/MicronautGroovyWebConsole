@@ -37,22 +37,22 @@ class FileServiceLocal implements FileService {
     }
 
     @Override
-    FileResponse upload(SystemFile file) {
+    FileResponse upload(String filename, File file) {
         FileResponse fileResponse = new FileResponse()
         try {
-            if(!file || !file.getFile()) {
+            if(!file) {
                 throw new RuntimeException("Failed to create empty file");
             }
 
-            String filename = UUID.randomUUID().toString()
-            File destination = new File(fileUploadFolder, filename)
+            String name = filename ?: UUID.randomUUID().toString()
+            File destination = new File(fileUploadFolder, name)
             FileOutputStream fos = new FileOutputStream(destination)
-            fos.write(file.getFile().getBytes())
+            fos.write(file.getBytes())
             fos.close()
 
             fileResponse.uploaded = true
-            fileResponse.url = "${baseUrl}/${filename}"
-            log.info("File [${filename}] successfully saved")
+            fileResponse.url = "${baseUrl}/${name}"
+            log.info("File [${name}] successfully saved")
         } catch(Exception e) {
             fileResponse.uploaded = false
             fileResponse.error = FileResponse.newError(e.getMessage())
@@ -62,17 +62,20 @@ class FileServiceLocal implements FileService {
     }
 
 
-    byte[] download(String name) {
+    SystemFile download(String filename) {
+        SystemFile response
         try {
-            File downloaded = new File(fileUploadFolder, name)
+            File downloaded = new File(fileUploadFolder, filename)
             if(!downloaded.exists()) {
-                throw new RuntimeException("File [${name}] doesn't exist")
+                throw new RuntimeException("File [${filename}] doesn't exist")
             }
-            downloaded.bytes
+            response = new SystemFile(downloaded)
+            response.attach(filename)
         } catch(Exception e) {
             log.error('The file cannot be downloaded', e)
             null
         }
+        response
     }
 
 }

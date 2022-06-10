@@ -6,7 +6,15 @@ import io.micronaut.http.server.types.files.SystemFile
 
 interface FileService {
 
-    FileResponse upload(SystemFile file)
+    default FileResponse upload(SystemFile systemFile) {
+        if(!systemFile || !systemFile.file) {
+            throw new RuntimeException("Failed to create empty file");
+        }
 
-    byte[] download(String filename)
+        upload("", systemFile.file)
+    }
+
+    FileResponse upload(String filename, File file)
+
+    SystemFile download(String filename)
 }

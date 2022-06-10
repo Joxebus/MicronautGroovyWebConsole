@@ -137,6 +137,7 @@ function init() {
             console.log(this.responseText)
 
             if(request.status === 200) {
+                takeScreenshot(jsonResult.url);
                 document.getElementById(ELEMENT_CODE_URL).value = jsonResult.url;
                 document.getElementById(ELEMENT_OUTPUT).innerText = "Code uploaded!";
                 document.getElementById(ELEMENT_ERROR_CARD).hidden = true
@@ -230,6 +231,33 @@ function init() {
         } else {
             selectTheme(THEME_LIGHT_MODE, false);
         }
+    }
+
+    function takeScreenshot(url) {
+        let codeArea = document.getElementById('code-area');
+        codeArea.style.width = "800px";
+        codeArea.style.height = "400px";
+
+        // Use the html2canvas
+        // function to take a screenshot
+        // and append it
+        // to the output div
+        html2canvas(codeArea).then(
+            function (canvas) {
+                codeArea.removeAttribute("style");
+                canvas.toBlob(function(screenShot) {
+
+                    let lastSlashIndex = url.lastIndexOf("/")+1
+                    let filename = url.substring(lastSlashIndex) + ".png"
+                    let request = new XMLHttpRequest();
+                    let formData = new FormData();
+
+                    formData.append("file", screenShot, filename);
+                    request.open("POST", '/image/upload');
+                    request.send(formData);
+                });
+
+            })
     }
 
     function getBrowserSize(){

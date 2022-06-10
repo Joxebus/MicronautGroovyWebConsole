@@ -12,7 +12,6 @@
     <meta property="og:description" content="This project is a console to write and execute Apache Groovy code.">
     <meta property="og:url" content="https://onlinegroovyconsole.herokuapp.com/">
     <meta property="al:web:url" content="https://onlinegroovyconsole.herokuapp.com/">
-    <meta property="og:image" content="https://github.com/Joxebus/MicronautGroovyWebConsole/blob/main/img/online_groovy_console_banner.png?raw=true">
     <meta property="article:author" content="https://joxebus.github.io/">
     <meta name="author" content="Omar Bautista (@Joxebus)">
     <meta name="robots" content="index,follow,max-image-preview:large">
@@ -21,10 +20,11 @@
     <meta name="twitter:site" content="@Joxebus">
     <meta name="twitter:creator" content="@Joxebus">
     <meta name="twitter:title" content="Online Groovy Console - Write, Run and Share your code.">
-    <meta name="twitter:image" content="https://github.com/Joxebus/MicronautGroovyWebConsole/blob/main/img/online_groovy_console_banner.png?raw=true">
     <meta name="twitter:image:alt" content="This tool help you to test your Groovy Code online">
-    <meta name="twitter:image:src" content="https://github.com/Joxebus/MicronautGroovyWebConsole/blob/main/img/online_groovy_console_banner.png?raw=true">
     <meta property="twitter:description" content="This project is a console to write and execute Apache Groovy code.">
+    <meta name="twitter:image:src" th:content="${imageUrl}" content="https://github.com/Joxebus/MicronautGroovyWebConsole/blob/main/img/online_groovy_console_banner.png?raw=true">
+    <meta name="twitter:image" th:content="${imageUrl}" content="https://github.com/Joxebus/MicronautGroovyWebConsole/blob/main/img/online_groovy_console_banner.png?raw=true">
+    <meta property="og:image" th:content="${imageUrl}" content="https://github.com/Joxebus/MicronautGroovyWebConsole/blob/main/img/online_groovy_console_banner.png?raw=true">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JETEGTR3HG"></script>
@@ -40,6 +40,7 @@
         gtag('config', 'G-JETEGTR3HG');
     </script>
 
+
     <link rel="shortcut icon" th:href="@{public/img/favicon.ico}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -51,6 +52,7 @@
     <script th:src="@{public/codemirror/addon/edit/matchbrackets.js}"></script>
     <script th:src="@{public/codemirror/addon/edit/closebrackets.js}"></script>
     <script th:src="@{public/codemirror/mode/groovy/groovy.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
 
     <link type="text/css" rel="stylesheet" th:href="@{public/codemirror/css/codemirror.css}"  />
     <link type="text/css" rel="stylesheet" th:href="@{public/codemirror/css/theme/blackboard.css}">

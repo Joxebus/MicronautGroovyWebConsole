@@ -1,0 +1,5 @@
+aws:
+  region: ${AWS_REGION:"us-west-2"}
+  bucket-name: ${AWS_BUCKET_NAME:"groovy-console"}
+  access-key: ${AWS_ACCESS_KEY}
+  secrect-key: ${AWS_SECRET_KEY}

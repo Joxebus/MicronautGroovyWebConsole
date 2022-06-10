@@ -54,4 +54,5 @@ class ScriptController {
             HttpResponse.ok(fileResponse)
         }
     }
+
 }
