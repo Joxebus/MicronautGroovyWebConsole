@@ -24,11 +24,7 @@ class ImageController {
         File image = new File(System.getProperty("java.io.tmpdir"), file.filename)
         image.bytes = file.bytes
         FileResponse fileResponse = fileService.upload(file.filename, image)
-        if(fileResponse.error) {
-            HttpResponse.serverError(fileResponse)
-        } else {
-            HttpResponse.ok(fileResponse)
-        }
+        fileResponse.error ? HttpResponse.serverError(fileResponse) : HttpResponse.ok(fileResponse)
     }
 
     @Get(value ="/download/{filename}", consumes = MediaType.APPLICATION_JSON, produces = MediaType.IMAGE_PNG)

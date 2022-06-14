@@ -48,11 +48,7 @@ class ScriptController {
     HttpResponse<FileResponse> upload(@Body Map groovyScript) {
         SystemFile systemFile = scriptFileGeneratorService.generateGroovyCodeFile(groovyScript.code)
         FileResponse fileResponse = fileService.upload(systemFile)
-        if(fileResponse.error) {
-            HttpResponse.serverError(fileResponse)
-        } else {
-            HttpResponse.ok(fileResponse)
-        }
+        fileResponse.error ? HttpResponse.serverError(fileResponse) : HttpResponse.ok(fileResponse)
     }
 
 }
