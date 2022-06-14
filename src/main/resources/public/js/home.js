@@ -94,6 +94,12 @@ function init() {
         }
     }
 
+    function showErrorMessage(error) {
+        document.getElementById(ELEMENT_ERROR).innerText = error;
+        document.getElementById(ELEMENT_ERROR_CARD).hidden = false
+        document.getElementById(ELEMENT_OUTPUT_CARD).hidden = true
+    }
+
     function executeCode() {
         console.log("Executing script");
         const timeoutId = showSpinner();
@@ -113,12 +119,19 @@ function init() {
                 document.getElementById(ELEMENT_ERROR_CARD).hidden = true
                 document.getElementById(ELEMENT_OUTPUT_CARD).hidden = false
             } else {
-                document.getElementById(ELEMENT_ERROR).innerText = jsonResult.error;
-                document.getElementById(ELEMENT_ERROR_CARD).hidden = false
-                document.getElementById(ELEMENT_OUTPUT_CARD).hidden = true
+                showErrorMessage(jsonResult.error);
             }
         };
 
+    }
+
+    function showModalShare(url) {
+        document.getElementById(ELEMENT_CODE_URL).value = url;
+        document.getElementById(ELEMENT_OUTPUT).innerText = "Code uploaded!";
+        document.getElementById(ELEMENT_ERROR_CARD).hidden = true
+        document.getElementById(ELEMENT_OUTPUT_CARD).hidden = false
+        document.getElementById(ELEMENT_URL_HELP).hidden = true
+        document.getElementById(ELEMENT_SHOW_MODAL).click();
     }
 
     function uploadCode() {
@@ -138,16 +151,8 @@ function init() {
 
             if(request.status === 200) {
                 takeScreenshot(jsonResult.url);
-                document.getElementById(ELEMENT_CODE_URL).value = jsonResult.url;
-                document.getElementById(ELEMENT_OUTPUT).innerText = "Code uploaded!";
-                document.getElementById(ELEMENT_ERROR_CARD).hidden = true
-                document.getElementById(ELEMENT_OUTPUT_CARD).hidden = false
-                document.getElementById(ELEMENT_URL_HELP).hidden = true
-                document.getElementById(ELEMENT_SHOW_MODAL).click();
             } else {
-                document.getElementById(ELEMENT_ERROR).innerText = jsonResult.error.message;
-                document.getElementById(ELEMENT_ERROR_CARD).hidden = false
-                document.getElementById(ELEMENT_OUTPUT_CARD).hidden = true
+                showErrorMessage(jsonResult.error.message);
             }
         };
 
@@ -234,7 +239,7 @@ function init() {
     }
 
     function takeScreenshot(url) {
-        let codeArea = document.getElementById('code-area');
+        let codeArea = document.getElementsByClassName('CodeMirror')[0];
         codeArea.style.width = "800px";
         codeArea.style.height = "400px";
 
@@ -255,9 +260,19 @@ function init() {
                     formData.append("file", screenShot, filename);
                     request.open("POST", '/image/upload');
                     request.send(formData);
+                    request.onload = function () {
+                        if(request.status === 200) {
+                            showModalShare(url);
+                        } else {
+                            showErrorMessage("Something went wrong while trying to create the screenshot.");
+                        }
+
+                    }
                 });
 
-            })
+
+
+            });
     }
 
     function getBrowserSize(){
