@@ -41,7 +41,7 @@ https://github.com/Joxebus/MicronautGroovyWebConsole
 --------------------------------------------------------------------------
 ```
 
-There are 3 available profiles `local`, `dropbox`, `aws` and `heroku`
+There are 3 available profiles `local`, `dropbox` and `heroku`
 
 - `local`: Use a local storage to save files at configured at `application.yml`
 - `dropbox`: Use the dropbox configuration to save files also you may need to provide `DROPBOX_TOKEN` 
