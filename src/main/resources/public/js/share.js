@@ -10,7 +10,8 @@ function shareOnFacebook() {
 }
 
 function shareOnTwitter() {
-    window.open('https://twitter.com/intent/tweet?url='+getSafeUrl()+'&text="New code sample"&via=Joxebus','popup',FEATURES);
+    let tweet = "📢 New code sample with @ApacheGroovy";
+    window.open('https://twitter.com/intent/tweet?url='+getSafeUrl()+'&text='+tweet+'&via=Joxebus','popup',FEATURES);
     return false;
 }
 
