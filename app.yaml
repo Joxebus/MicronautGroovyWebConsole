@@ -1,0 +1,10 @@
+runtime: java11
+instance_class: F1
+entrypoint: java -jar /workspace/build/libs/MicronautGroovyWebConsole-1.0-all.jar
+env_variables:
+  "BASE_URL": $BASE_URL
+  "DROPBOX_TOKEN": $DROPBOX_TOKEN
+  "MICRONAUT_ENVIRONMENTS": "cloud,dropbox"
+handlers:
+  - url: /.*
+    script: this field is required, but ignored

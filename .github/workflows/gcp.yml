@@ -1,0 +1,30 @@
+name: Deploy to App Engine
+
+on:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Replace env variables
+        uses: 73h/gae-app-yaml-replace-env-variables@v0.3
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+        with:
+          app_yaml_path: "app.yaml"
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_JSON_CREDENTIALS }}
+
+      - name: Deploy to Google App Engine
+        run: gcloud app deploy app.yaml

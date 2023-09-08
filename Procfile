@@ -1,1 +1,0 @@
-web: java $JAVA_TOOL_OPTIONS -jar build/libs/MicronautGroovyWebConsole-1.0-all.jar -Dmicronaut.server.port=$PORT -Dmicronaut.environments=heroku,dropbox

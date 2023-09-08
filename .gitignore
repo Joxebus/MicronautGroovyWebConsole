@@ -1,9 +1,11 @@
-Thumbs.db
+# Directories
 .DS_Store
 .gradle
 build/
 target/
 out/
+
+# IDE file configurations
 .idea
 *.iml
 *.ipr
@@ -11,3 +13,8 @@ out/
 .project
 .classpath
 .factorypath
+
+# Files
+app-secrets.yaml
+deploy.sh
+Thumbs.db
