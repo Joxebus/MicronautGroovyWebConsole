@@ -1,12 +1,14 @@
 plugins {
     id("groovy")
-    id("com.github.johnrengelman.shadow") version "7.1.1"
-    id("io.micronaut.application") version "3.2.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("io.micronaut.application") version "4.3.2"
+    id("io.micronaut.aot") version "4.3.2"
 }
 
 ext {
-    groovyVersion = "3.0.9"
+    groovyVersion = "4.0.16"
     dropboxVersion = "4.0.1"
+    spockVersion = "2.3-groovy-4.0"
 }
 
 version = "1.0"
@@ -23,22 +25,40 @@ micronaut {
         incremental(true)
         annotations("com.github.joxebus.*")
     }
+    aot {
+        // Please review carefully the optimizations enabled below
+        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+        optimizeServiceLoading = false
+        convertYamlToJava = false
+        precomputeOperations = true
+        cacheEnvironment = true
+        optimizeClassLoading = true
+        deduceEnvironment = true
+        optimizeNetty = true
+    }
 }
 
 dependencies {
     implementation("javax.inject:javax.inject:1")
-    implementation("io.micronaut:micronaut-validation")
-    /*implementation("io.micronaut.groovy:micronaut-runtime-groovy") {
-        exclude group: 'org.codehaus.groovy', module: 'groovy-bom'
-    }*/
+    //implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.groovy:micronaut-runtime-groovy")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+    compileOnly("io.micronaut:micronaut-http-client")
+    compileOnly("io.micronaut:micronaut-http-validation")
+    implementation("io.micronaut.serde:micronaut-serde-processor")
     implementation("com.dropbox.core:dropbox-core-sdk:${dropboxVersion}")
-    implementation("io.micronaut:micronaut-http-client")
+    testImplementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
 
-    implementation("org.codehaus.groovy:groovy-all:${groovyVersion}")
-    implementation("org.codehaus.groovy:groovy-yaml:${groovyVersion}")
-    implementation("org.codehaus.groovy:groovy-dateutil:${groovyVersion}")
+    //implementation("org.apache.groovy:groovy-all:${groovyVersion}")
+    implementation("org.apache.groovy:groovy-yaml:${groovyVersion}")
+    implementation("org.apache.groovy:groovy-json:${groovyVersion}")
+    implementation("org.apache.groovy:groovy-xml:${groovyVersion}")
+    implementation("org.apache.groovy:groovy-dateutil:${groovyVersion}")
 
+
+    testImplementation platform("org.spockframework:spock-bom:${spockVersion}")
+    testImplementation "org.spockframework:spock-core"
 
     // Thymeleaf support
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
@@ -50,8 +70,8 @@ application {
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("1.8")
-    targetCompatibility = JavaVersion.toVersion("1.8")
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
 }
 
 test {
