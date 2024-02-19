@@ -1,0 +1,13 @@
+{
+    "status": "Fail",
+    "rules": [
+        {
+            "status": "Fail",
+            "message": "Code error"
+        },
+        {
+            "status": "Fail",
+            "message": "Configuration error"
+        }
+    ]
+}

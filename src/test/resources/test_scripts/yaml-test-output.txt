@@ -1,0 +1,5 @@
+YAML keys: [version, environment, context, endpoints]
+Key: version 	 Type: java.math.BigDecimal
+Key: environment 	 Type: java.lang.String
+Key: context 	 Type: org.apache.groovy.json.internal.LazyMap
+Key: endpoints 	 Type: org.apache.groovy.json.internal.LazyMap

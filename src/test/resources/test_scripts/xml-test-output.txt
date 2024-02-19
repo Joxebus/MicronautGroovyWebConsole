@@ -1,0 +1,10 @@
+<people>
+  <person lastname='Bautista' age='33'>
+    <name>Omar</name>
+    <from city='Merida' />
+  </person>
+  <person lastname='Valenzuela' age='29'>
+    <name>Jorge</name>
+    <from city='Guanajuato' />
+  </person>
+</people>

@@ -1,0 +1,25 @@
+import groovy.yaml.YamlSlurper
+
+def slurper = new YamlSlurper()
+
+def configuration = '''
+version: 3.0
+environment: "dev"
+context:
+  path: "/test"
+endpoints:
+  url: "/people"
+  operations:
+    POST: "create"
+    GET: "list or get"
+    PUT: "/update"
+    DELETE: "delete"
+'''
+
+def yaml = slurper.parseText(configuration)
+
+println "YAML keys: ${yaml.keySet()}"
+
+yaml.keySet().each { key ->
+   println "Key: $key \t Type: ${yaml[key].getClass().name}"
+}

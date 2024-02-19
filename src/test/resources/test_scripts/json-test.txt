@@ -1,0 +1,29 @@
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+import groovy.json.JsonGenerator
+
+String json = '''{
+  "status": "Fail",
+  "code": "500",
+  "rules": [{
+      "status": "Fail",
+      "message": "Code error",
+      "id": "123456"
+    },
+    {
+      "status": "Fail",
+      "message": "Configuration error",
+      "id": "12345"
+    }
+  ]
+}'''
+
+Map input = new JsonSlurper().parseText(json)
+
+def generator = new JsonGenerator.Options()
+    .excludeFieldsByName('id', 'code')
+    .build()
+
+String output = generator.toJson(input)
+
+println JsonOutput.prettyPrint(output)

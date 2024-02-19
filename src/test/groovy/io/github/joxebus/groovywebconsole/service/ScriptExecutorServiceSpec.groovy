@@ -6,6 +6,8 @@ import io.github.joxebus.groovywebconsole.util.ScriptEndOfFileTrait
 import spock.lang.Shared
 import spock.lang.Specification
 
+import static io.github.joxebus.groovywebconsole.util.FileReaderUtil.getFileContent
+
 class ScriptExecutorServiceSpec extends Specification implements ScriptEndOfFileTrait {
 
     @Shared
@@ -32,55 +34,30 @@ class ScriptExecutorServiceSpec extends Specification implements ScriptEndOfFile
 
     def "Test script execute complex script successful"() {
         given:
-        String script = """
-        @groovy.transform.TupleConstructor
-        class BankAccount {
-           BigDecimal amount = 0.0
-           
-           BankAccount plus(BankAccount account) {
-              this.amount += account.amount
-              this
-           }
-           
-           BankAccount minus(BankAccount account) {
-              this.amount -= account.amount
-              this
-           }
-           
-           BankAccount multiply(BankAccount account) {
-              this.amount *= account.amount
-              this
-           }
-           
-           BankAccount div(BankAccount account) {
-              this.amount /= account.amount
-              this
-           }
-           
-           BigDecimal balance() { amount }
-        }
-        
-        
-        def account = new BankAccount()
-        
-        account + new BankAccount(100) 
-        println account.balance()
-        
-        account - new BankAccount(50) 
-        println account.balance()
-        
-        account * new BankAccount(3)
-        println account.balance()
-        
-        account / new BankAccount(50)
-        println account.balance()
-        """
+        String script = getFileContent('test_scripts/bank-account-test.txt')
 
         when:
         Map result = scriptExecutorService.execute(script)
 
         then:
         result.output == withEof("100.0\n50.0\n150.0\n3.0")
+
+    }
+
+    def "Test execute [#type] script successful"() {
+        given:
+        String script = getFileContent("test_scripts/${type}-test.txt")
+
+        String output = getFileContent("test_scripts/${type}-test-output.txt")
+
+        when:
+        Map result = scriptExecutorService.execute(script)
+
+        then:
+        result.output == withEof(output)
+
+        where:
+        type << ['xml', 'yaml', 'json', 'date']
 
     }
 
@@ -136,4 +113,6 @@ class ScriptExecutorServiceSpec extends Specification implements ScriptEndOfFile
                 '''
         ]
     }
+
+
 }

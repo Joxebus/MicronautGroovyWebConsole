@@ -7,6 +7,8 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.server.types.files.SystemFile
 import io.micronaut.views.ModelAndView
 
+import java.util.regex.Matcher
+
 @Controller("/")
 class HomeController {
 
@@ -31,7 +33,7 @@ class HomeController {
         String groovyScript = "// Write your code here"
         String siteUrl = baseUrl
         String imageUrl = defaultImage
-        if(uuid) {
+        if(uuid && isValid(uuid)) {
             String imageName = uuid.concat(".png")
             SystemFile code = fileService.download(uuid)
             SystemFile screenShot = fileService.download(imageName)
@@ -43,4 +45,8 @@ class HomeController {
         new ModelAndView("home/home", [groovyScript: groovyScript, imageUrl: imageUrl, siteUrl: siteUrl])
     }
 
+    boolean isValid(String uuid) {
+        Matcher matcher = uuid =~ /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/
+        matcher.matches()
+    }
 }
