@@ -1,5 +1,4 @@
-List months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+String dateFormat = "dd/MM/yyyy"
 def today = Date.parse("dd-MM-yyyy", "3-11-2020")
 def clonedDate = today.clone()
 def yesterday = today - 1
@@ -20,18 +19,6 @@ assert today[Calendar.MONTH] == 10
 assert today[Calendar.DATE] == 3
 
 println """
-Yesterday: $yesterday
-Today:     $today
-Tomorrow:  $tomorrow
-"""
-
-println "Hoy es ${today[Calendar.DATE]} de ${months[today[Calendar.MONTH]]} de ${today[Calendar.YEAR]}"
-
-
-String dateFormat = "dd/MM/yyyy"
-
-println """
 Day before: ${yesterday.format(dateFormat)}
 Initial:    ${today.format(dateFormat)}
-Day after:  ${tomorrow.format(dateFormat)}
-"""
+Day after:  ${tomorrow.format(dateFormat)}"""

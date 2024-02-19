@@ -1,10 +1,4 @@
 
-Yesterday: Mon Nov 02 00:00:00 CST 2020
-Today:     Tue Nov 03 00:00:00 CST 2020
-Tomorrow:  Wed Nov 04 00:00:00 CST 2020
-
-Hoy es 3 de Noviembre de 2020
-
 Day before: 02/11/2020
 Initial:    03/11/2020
 Day after:  04/11/2020

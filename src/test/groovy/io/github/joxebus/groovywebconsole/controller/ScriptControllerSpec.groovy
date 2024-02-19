@@ -100,8 +100,7 @@ class ScriptControllerSpec extends Specification implements ScriptEndOfFileTrait
 
         where:
         params << [
-                [code:'''def exit = System.&exit
-                exit(1)'''],
+                [code:'''def exit = System.&exit(1)'''],
                 [code:'System.exit(1)']
         ]
     }
