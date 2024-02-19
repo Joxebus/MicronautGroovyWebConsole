@@ -13,8 +13,8 @@ import io.micronaut.context.annotation.Requires
 import io.micronaut.context.annotation.Value
 import io.micronaut.http.server.types.files.SystemFile
 
-import javax.annotation.PostConstruct
-import javax.inject.Singleton
+import jakarta.annotation.PostConstruct
+import jakarta.inject.Singleton
 
 @Singleton
 @CompileStatic

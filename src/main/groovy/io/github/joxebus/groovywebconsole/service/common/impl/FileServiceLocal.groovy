@@ -7,9 +7,9 @@ import io.github.joxebus.groovywebconsole.service.common.FileService
 import io.micronaut.context.annotation.Requires
 import io.micronaut.context.annotation.Value
 import io.micronaut.http.server.types.files.SystemFile
+import jakarta.annotation.PostConstruct
+import jakarta.inject.Singleton
 
-import javax.annotation.PostConstruct
-import javax.inject.Singleton
 
 @Singleton
 @CompileStatic
