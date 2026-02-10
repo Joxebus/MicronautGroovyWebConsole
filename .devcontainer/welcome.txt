@@ -1,0 +1,31 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║        🚀 Groovy Online Web Development Environment 🚀        ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+📦 Environment Details:
+    - Groovy 3.0.9
+    - Micronaut 3.3.0  
+    - Gradle 7.3.3
+    - Thymeleaf 2.2.1
+    - Bootstrap 5
+
+🔧 Available Commands:
+   • ./gradlew test          - Run all Spock tests
+   • ./gradlew build         - Build the project
+   • ./gradlew clean         - Clean build artifacts
+   • ./gradlew tasks         - List all available tasks
+   • java -Dmicronaut.environments=local -jar build/libs/MicronautGroovyWebConsole-1.0-all.jar
+
+📚 Quick Start:
+   1. Tests are located in: src/test/groovy/
+   2. Add your code in: src/main/groovy/ or src/main/java/
+   3. Run tests with: ./gradlew test
+
+💡 Tips:
+   • Spock tests use Groovy syntax with BDD-style specifications
+   • Check ScriptControllerTest.groovy for a sample test
+   • Use 'given-when-then' blocks for clear test structure
+   • Always use ./gradlew (wrapper) instead of gradle command
+
